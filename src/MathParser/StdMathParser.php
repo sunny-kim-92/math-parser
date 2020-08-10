@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace MathParser;
 
@@ -42,7 +42,7 @@ class StdMathParser extends AbstractMathParser
         $this->lexer = new StdMathLexer();
         $this->parser = new Parser();
     }
-    
+
     /**
      * Parse the given mathematical expression into an abstract syntax tree.
      *
@@ -51,10 +51,15 @@ class StdMathParser extends AbstractMathParser
      */
     public function parse($text)
     {
+        try {
         $this->tokens = $this->lexer->tokenize($text);
         $this->tree = $this->parser->parse($this->tokens);
 
         return $this->tree;
+        } catch (Exception $e) {
+            Log::info($e);
+            return 1;
+        }
     }
-    
+
 }
